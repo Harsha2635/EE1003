@@ -62,8 +62,8 @@ implicit_y = np.array(implicit_y)
 
 # Plot the points
 plt.figure(figsize=(10, 6))
-plt.plot(x_points, y_points, 'ro-', markersize=2, linewidth=4, label="Simulated")
-plt.plot(x, implicit_y, label='Theoretical', color='blue')
+plt.plot(x_points, y_points, 'ro-', markersize=2, linewidth=4, label="sim")
+plt.plot(x, implicit_y, label='theory', color='blue')
 # Add labels, title, grid, and legend
 plt.xlabel("x")
 plt.ylabel("y")
