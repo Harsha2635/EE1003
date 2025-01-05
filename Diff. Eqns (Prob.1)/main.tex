@@ -106,37 +106,44 @@ or \begin{align}
 \end{align}
 By sustituting $v=\frac{y}{x}$ ,
 \begin{align}
-    \frac{1}{2}\ln \brak{\frac{y^2}{x^2}+1} + \tan^{-1}{\brak{\frac{y}{x}}} = - \ln{x} + c
+    \frac{1}{2}\ln \brak{\frac{y^2}{x^2}+1} + \tan^{-1}{\brak{\frac{y}{x}}} = - \ln{x} + c  
     \label{0.12}
 \end{align}
-where, c is the constant of integration
-By substituting $x=1 \text{ and } y=1$ in \ref{0.12},
+(where, c is the constant of integration)
+By substituting $x=1 \text{ and } y=1$ ,
 \begin{align}
     c = \frac{1}{2}\ln{2} + \frac{\pi}{4}
 \end{align}
 Final equation,
 \begin{align}
-    \frac{1}{2}\ln \brak{\frac{y^2}{x^2}+1} + \tan^{-1}{\brak{\frac{y}{x}}} = - \ln{x} + \frac{1}{2}\ln{2} + \frac{\pi}{4}
-    \label{0.14}
+    \frac{1}{2}\ln \brak{\frac{y^2}{x^2}+1} + \tan^{-1}{\brak{\frac{y}{x}}} = - \ln{x} + \frac{1}{2}\ln{2} + \frac{\pi}{4}   
 \end{align}
 Now let us verify this computationally
 From definition of $\frac{dy}{dx}$,
 \begin{align}
-    y_{n+1}=y_{n}+\frac{dy}{dx}\cdot h
-    \label{0.15}
+    y_{n+1}=y_{n}+\frac{dy}{dx}\cdot h    
 \end{align}
 (where h is small number tending to zero)
 From the differential equation given,
 \begin{align}
     \frac{dy}{dx}=\frac{y_n-x_n}{y_n+x_n}
-    \label{0.16}
 \end{align}
-By substituting \ref{0.16} in \ref{0.15},
+By substituting,
 \begin{align}
     y_{n+1}=y_{n}+\brak{\frac{y_n-x_n}{y_n+x_n}}\cdot h
 \end{align}
-By taking $x_1=1 \text{ and } y_1=1$  and $h=0.04$ going till $x=3$ by iterating through the loop and finding $y_2,y_3,\cdots , y_{500}$ and plotting the graph the implicit function \ref{0.14} we can verify if the function we got by solving the differential equation mathematically.
+By taking $x_1=1 \text{ and } y_1=1$  and $h=0.04$ going till $x=3$ by iterating through the loop and finding $y_2,y_3,\cdots , y_{500}$ and plotting the graph the implicit function we can verify if the function we got by solving the differential equation mathematically.
+The comparision between theoretical and simulated graphs is shown in the following page ~\ref{fig:1}\\
+Clearly, both theoretical and simulated curves are coinciding and Hence the theoretical solution is verified.
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\columnwidth]{figs/Figure_1.png}
+    \caption{}
+    \label{fig:1}
+\end{figure}
 \end{document}
+
+
 
 
 
