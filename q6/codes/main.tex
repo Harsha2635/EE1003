@@ -1,8 +1,6 @@
-  \let\negmedspace\undefined
-\let\negthickspace\undefined
 \documentclass[journal]{IEEEtran}
 \usepackage[a5paper, margin=10mm, onecolumn]{geometry}
-\usepackage{lmodern} % Ensure lmodern is loaded for pdflatex
+%\usepackage{lmodern} % Ensure lmodern is loaded for pdflatex
 \usepackage{tfrupee} % Include tfrupee package
 
 \setlength{\headheight}{1cm} % Set the height of the header box
@@ -24,80 +22,92 @@
 \usepackage{comment}
 \usepackage[breaklinks=true]{hyperref}
 \usepackage{tkz-euclide} 
-\usepackage{listings}                                      
+\usepackage{listings}
+% \usepackage{gvv}                                        
 \def\inputGnumericTable{}                                 
 \usepackage[latin1]{inputenc}                                
 \usepackage{color}                                            
 \usepackage{array}                                            
-\usepackage{longtable}
-\usepackage{multicol}
+\usepackage{longtable}                                       
 \usepackage{calc}                                             
 \usepackage{multirow}                                         
 \usepackage{hhline}                                           
 \usepackage{ifthen}                                           
 \usepackage{lscape}
 \begin{document}
-	
-	\bibliographystyle{IEEEtran}
-	\vspace{3cm}
-	
-	\title{10.4.2.1.5}
-	\author{EE24BTECH11063 - Y. Harsha Vardhan Reddy}
-	% \maketitle
-	% \newpage
-	% \bigskip
-	{\let\newpage\relax\maketitle}
-	
-	\renewcommand{\thefigure}{\theenumi}
-	\renewcommand{\thetable}{\theenumi}
-	\setlength{\intextsep}{10pt} % Space between text and floats
-	
-	
-	\numberwithin{equation}{enumi}
-	\numberwithin{figure}{enumi}
-	\renewcommand{\thetable}{\theenumi}
-	
-	
+
+\bibliographystyle{IEEEtran}
+\vspace{3cm}
+
+\title{10.4.1.1.8}
+\author{EE24BTECH11024 - G. Abhimanyu Koushik}
+ \maketitle
+% \newpage
+% \bigskip
+{\let\newpage\relax\maketitle}
+
+\renewcommand{\thefigure}{\theenumi}
+\renewcommand{\thetable}{\theenumi}
+\setlength{\intextsep}{10pt} % Space between text and floats
+
+
+\numberwithin{equation}{enumi}
+\numberwithin{figure}{enumi}
+\renewcommand{\thetable}{\theenumi}
+
+
 \textbf{Question}:\\
-Find the roots of the equation \( 100x^2-20x+1=0 \)
+Find the roots of the equation $x^3 - 4x^2 - x + 1 = \brak{x - 2}^3$
 \\
 \textbf{Solution: }\\
-Given equation,
+Theoritical solution:\\
+The equation can be simplified to
 \begin{align}
-100x^2-20x+1=0
+	x^3 - 4x^2 - x + 1 &= \brak{x - 2}^3\\
+	x^3 - 4x^2 - x + 1 &= x^3-6x^2+12x-8\\
+	2x^2 - 13x + 9 &= 0
 \end{align}
-We can solve the above equation using fixed point iterations. First we separate $x$, from the above equation and make an update equation of the below sort.
+Applying quadratic formula gives solution as
 \begin{align}
-	x = g\brak{x} \implies x_{n+1} = g\brak{x_n}
+	x_1 = \frac{13-\sqrt{97}}{4}\\
+	x_2 = \frac{13+\sqrt{97}}{4}
 \end{align}
-Applying the above update equation on our equation, we get
+Computational solution:\\
+Two methods to find solution of a quadratic equation are:\\
+Matrix-Based Method:\\
+For a polynomial equation of form $x_n+b_{n-1}x^{n-1}+\dots+b_2x^2+b_1x+b_0 = 0$ we construct a matrix called companion matrix of form
 \begin{align}
-	x_{n+1} = 	\frac{100x_n^2+1}{20}
+	\Lambda = \myvec{0&1&0&\dots&0\\ 0&0&1&\dots&0\\ \vdots &\vdots &\vdots &\ddots&\vdots\\0&0&0&\vdots&1\\-b_0&-b_1&-b_2&\dots&-b_{n-1}}
 \end{align}
-Now we take an initial value $x_0$ and iterate the above update equation. But we realize that the updated values always approach infinity for any initial value. \\
-Thus we will alternatively use Newton's Method for solving equations.
+The eigenvalues of this matrix are the roots of the given polynomial equation.\\
+The solution given by the code is
 \begin{align}
-	x_{n+1} = x_n - \frac{f\brak{x_n}}{f^{\prime}\brak{x_n}} 
+	x_1 = 0.7878\\
+	x_2 = 5.7122
 \end{align}
-Where we define $f\brak{x}$ as, 
+Newton-Raphson Method:\\
+Start with an initial guess $x_0$, and then run the following logical loop,
 \begin{align}
-	f\brak{x} = 100x^2-20x+1=0 \\
-	f^{\prime}\brak{x} = 200x-20 
+    x_{n+1} = x_n - \frac{f\brak{x_n}}{f^{\prime}\brak{x_n}} 
 \end{align}
-Thus, the new update equation is, 
+where,
 \begin{align}
-	x_{n+1} = x_n - \frac{100x_n^2-20x_n+1=0}{200x_n-20 } 
+    f\brak{x} = 2x^2 - 13x + 9\\
+    f^{\prime}\brak{x} = 4x-13
 \end{align}
-Taking the initial guess as $x_0 = 0.05$, we can see that $x_n$ converges with x as,
+The update equation will be
 \begin{align}
-	x = 0.0999999 \approx 0.10
+	x_{n+1} = x_n - \frac{2{x_n}^2 - 13x_n + 9}{4x_n-13}\\
 \end{align}
-Alternatively, we can use the Secant method for solving equations.
+The problem with this method is if the roots are complex but the coeffcients are real, $x_n$ either converges to an extrema or grows continuously without any bound.
+To get the complex solutions, however , we can just take the initial guess point to be a 
+random complex number.\\
+The output of a program written to find roots is shown below:
 \begin{align}
-	x_{n+1} = x_n + f\brak{x_n}\frac{x_{n} -  x_{n-1}}{f(x_{n}) -  f(x_{n-1})}
+	r_1 = 0.7878\\
+	r_2 = 5.7122
 \end{align}
-Newton's method is very powerful but has the disadvantage that the derivative may sometimes be a far more difficult expression than \(f(x)\) itself and its evaluation therefore it may be more computationally expensive. The secant's method is more computationally cheap as the equation of the derivative is avoided by taking 2 starting points.\\
-Alternatively, QR decomposition on Hessenberg matrix:\\
+QR decomposition on Hessenberg matrix:\\
 It is a Numerical method for finding eigenvalues of a given matrix\\
 We say a matrix $A$ is in hessenberg form if it is in form shown below
 \begin{align}
@@ -254,40 +264,31 @@ $RQ$ Will also be in the same form
 \begin{align}
 \overline{H} = RQ+\lambda I = \myvec{\overline{H_1} & \vec{h}_1\\0^\top & \lambda}
 \end{align}
-For the given polynomial equation the companion matrix will be,
+\newline\newline
+For the given polynomial equation the companion matrix will be
 \begin{align}
-	\Lambda = \myvec{0 & 1\\-\frac{1}{100} & \frac{1}{5}}
+	\Lambda = \myvec{0 & 1\\-\frac{9}{2} & \frac{13}{2}}
 \end{align}
-Since a $2\times 2$ matrix is already in Hessenberg form, no need to run the Hessenberg algorithm\newline
-As $n=2$, the $G_1$ matrix is equal to the $Q$ matrix\newline
+Since a $2\times 2$ matrix is already in hessenberg for, no need to run the hessenberg algorithm\newline
+As $n=2$, the $G_1$ matrix is equal to $Q$ matrix\newline
 For the first iteration
 \begin{align}
-\sigma &= \frac{1}{5}\\
-H_{\text{shifted}} &= \myvec{-\frac{1}{5} & 1\\ -\frac{1}{100} & 0}\\
-x_{1,1} &=  -\frac{1}{5}\\
-x_{1,2} &=  -\frac{1}{100}\\
-c &= \frac{-\frac{1}{5}}{\sqrt{\brak{\frac{1}{5}}^2+\brak{\frac{1}{100}}^2}}\\
-s &= \frac{-\frac{1}{100}}{\sqrt{\brak{\frac{1}{5}}^2+\brak{\frac{1}{100}}^2}}\\
-c &\approx -0.999750\\
-s &\approx -0.022493\\
-Q &= \myvec{-0.999750 & -0.022493\\0.022493 & -0.999750}\\
+\sigma &= \frac{13}{2}\\
+H_{\text{shifted}} &= \myvec{\frac{-13}{2} & 1\\ \frac{-9}{2} & 0}\\
+x_{1,1} &=  \frac{-13}{2}\\
+x_{1,2} &=  \frac{-9}{2}\\
+c &= \frac{\frac{-13}{2}}{\sqrt{\brak{\frac{13}{2}}^2+\brak{\frac{9}{2}}}^2}\\
+s &= \frac{\frac{-9}{2}}{\sqrt{\brak{\frac{13}{2}}^2+\brak{\frac{9}{2}}}^2}\\
+c &\approx -0.822192\\
+s &\approx -0.569210\\
+Q &= \myvec{-0.822192 & -0.569210\\0.569210 &-0.822192}\\
 H_{\text{new}} &= QH_{\text{shifted}}Q^\top+\sigma I\\
-H_{\text{new}} &= \myvec{0.0002 & 0.2\\0 & 0.1998} 
+H_{\text{new}} &= \myvec{0.468 & 5.176\\-0.324 & 6.032} 
 \end{align}
 Running the same sequence of steps for 20 iterations produces the following matrix
 \begin{align}
-H = \myvec{0.1000 & 0.2\\ 0 & 0.1000}
+H = \myvec{0.78778555 & 5.5\\ 0 & 5.71221445}
 \end{align}
-Since it is an upper triangular matrix, the diagonal elements are the eigenvalues\newline
-
-
-The code which computes this gives equal roots as "0.1000 + 0.0000 j"
-\newline\newline
-	\begin{figure}[h!]
-		\centering
-		\includegraphics[width=\columnwidth]{figs/Figure_1.png}
-		\caption{Solution of the given function}
-		\label{stemplot}
-	\end{figure}
-	
-\end{document}  `   ```````````````````````````````````````````````````````````````````````````````````````````
+Since it is an Upper triangular matrix, the diagonal elements are the eigenvalues\newline
+Hence the roots of given equation are 0.78778555 and 5.71221445
+\end{document}
