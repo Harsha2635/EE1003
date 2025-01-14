@@ -24,7 +24,6 @@ y = 100 * x**2 - 20 * x + 1
 plt.plot(x, y, label='f(x) = 100x^2 - 20x + 1')
 plt.axhline(0, color='black', linewidth=0.7, linestyle='--')
 plt.scatter([root], [0], color='red', label=f'Root at x = {root:.6f}')
-plt.title('Newton\'s Method: Finding Roots')
 plt.xlabel('x')
 plt.ylabel('f(x)')
 plt.legend()
