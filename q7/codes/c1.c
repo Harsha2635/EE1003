@@ -82,8 +82,10 @@ int main() {
     printMat("L (lower triangular)", L);
         printMat("U (upper triangular)", U);
     if (!LUdec(A, L, U)) {
+    if(x[N-1]){
         printf("No solution: The system is singular or the equations are parallel.\n");
         return 1;
+    }
     }
     return 0;
 }
