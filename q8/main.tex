@@ -72,11 +72,7 @@ Probability of a given event 'A'(A: Outcome is greater than 6),\\
 The task involves simulating the roll of a single die using a C program, compiling it into a shared object (.so) file, and then using Python to call this function. The Python code processes the results and generates a probability distribution plot for outcomes \(1, 2, 3, 4, 5, 6\), and \textgreater6.
 
 \section*{C Code Description}
-The C program generates random outcomes for rolling a single die, where the possible outcomes range from \(1\) to \(10\). Outcomes are categorized as follows:
-\begin{itemize}
-    \item \(1, 2, \ldots, 6\): Corresponding counts are stored in an array index \(0-5\).
-    \item \textgreater6: Counts for numbers \(7-10\) are aggregated and stored in index \(6\).
-\end{itemize}
+The C program generates random outcomes for rolling a single die, where the possible outcomes range from \(1\) to \(10\). Outcomes are categorized as follows:\\
 The program uses the \texttt{rand()} function to generate random numbers and increments the respective indices of the results array based on the generated outcome.
 
 \section*{Python Code Description}
