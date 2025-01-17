@@ -106,6 +106,11 @@ Now, solving for x via back substitution,
 \begin{align}
 	\myvec{2&1\\0&0}\myvec{x_1 \\ x_2} &= \myvec{160 \\ -20}
 \end{align}
+\begin{itemize}
+\item If the system is inconsistent (such as parallel, non-coincident lines), the matrix A will be singular, meaning its determinant is zero.
+\item During LU Decomposition, you might encounter a row in the matrix U that has all zeros except in the last column (the augmented column from the right-hand side vector $\vec{b}$). This indicates that you have a row of zeros, which corresponds to a situation where one of the equations is redundant (i.e., it doesn't provide any new information).
+\item If the augmented matrix has a non-zero value in the corresponding position in the last column (i.e., the equation is inconsistent), then the system has no solution.
+\end{itemize}
 Clearly, 
 \begin{align}
     2x_1+x_2=160\\
