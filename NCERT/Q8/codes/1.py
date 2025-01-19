@@ -1,4 +1,5 @@
 import ctypes
+import matplotlib.pyplot as plt
 
 # Load the shared library
 one_die_sim = ctypes.CDLL('./c.so')
@@ -28,4 +29,14 @@ for i, prob in enumerate(probabilities[:-1]):  # Skip the '>6' category for stem
 if probabilities[-1] > 0:
     stars = int(probabilities[-1] * 100)
     print(f">{categories[-2]} | {'*' * stars}")
+
+# Convert all categories to strings for plotting
+categories_str = [str(cat) for cat in categories]
+
+# Plot the stem plot
+plt.stem(categories_str, probabilities, linefmt='b-', markerfmt='ro', basefmt="k-")
+plt.title("Stem Plot of Probabilities for Die Rolls")
+plt.xlabel("Outcomes")
+plt.ylabel("Probability")
+plt.show()
 
