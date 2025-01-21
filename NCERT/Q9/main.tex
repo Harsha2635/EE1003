@@ -111,17 +111,17 @@ where:
     \begin{align}
     \binom{n}{k} = \frac{n!}{k! (n-k)!}
     \end{align}
-    \item The coefficient of \(z^k\) in \(T(z)\) gives the probability \(P(X = k)\), where \(X\) is the number of tails.
+    \item The coefficient of \(z^k\) in \(T(z)\) gives the probability \(P_X(k)\), where \(X\) is the number of tails.
 \end{itemize}
 
 \subsection*{3. Probability Mass Function (PMF)}
 The PMF is computed as:
 \begin{align}
-P(X = k) = \binom{n}{k} p^{n-k} (1-p)^k
+P_X(k) = \binom{n}{k} p^{n-k} (1-p)^k
 \end{align}
 Substitute \(p = 0.5\) and \(1-p = 0.5\) for a fair coin:
 \begin{align}
-P(X = k) = \binom{n}{k} (0.5)^n
+P_X(k) = \binom{n}{k} (0.5)^n
 \end{align}
 
 \subsection*{4. Computational Steps}
@@ -131,9 +131,9 @@ For each \(k \in \{0, 1, \dots, n\}\):
     \begin{align}
     \binom{n}{k} = \prod_{i=0}^{k-1} \frac{n-i}{k-i}
     \end{align}
-    \item Multiply by \((0.5)^n\) to compute \(P(X = k)\):
+    \item Multiply by \((0.5)^n\) to compute \(P_X(k)\):
     \begin{align}
-    P(X = k) = \binom{n}{k} \cdot (0.5)^n
+    P_X(k) = \binom{n}{k} \cdot (0.5)^n
     \end{align}
 \end{enumerate}
 
@@ -144,10 +144,13 @@ T(z) = (0.5 + 0.5z)^3 = 0.125 + 0.375z + 0.375z^2 + 0.125z^3
 \end{align}
 The PMF values are:
 \begin{align}
-P(X = 0) = 0.125, \quad P(X = 1) = 0.375, \quad P(X = 2) = 0.375, \quad P(X = 3) = 0.125
+P_X(0) = 0.125, \quad P_X(1) = 0.375, \quad P_X(2) = 0.375, \quad P_X(3) = 0.125
 \end{align}
 
-
+The CDF values are:
+\begin{align}
+F_X(0) = 0.125, \quad F_X(1) = 0.5, \quad F_X(2) = 0.875, \quad F_X(3) = 1
+\end{align}
 	\begin{figure}[h!]
 		\centering
 		\includegraphics[width=\columnwidth]{figs/fig1.png}
