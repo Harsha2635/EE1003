@@ -61,81 +61,96 @@
 \textbf{Question}:\\
 Find the probability that no toss results in a tail when coin is tossed thrice(independent tosses) \\
 \textbf{Solution: }\\
+\textbf{Theoretical solution: }\\
+To calculate the probability of getting all three tails when a coin is tossed three times:
+
+\begin{itemize}
+    \item The probability of getting a tail (\(T\)) in a single toss is:
+    \[
+    P(T) = \frac{1}{2}.
+    \]
+    \item Since the tosses are independent, the probability of getting three tails (\(TTT\)) is given by:
+    \[
+    P(\text{Three Tails}) = P(T) \times P(T) \times P(T).
+    \]
+    \item Substituting \(P(T) = \frac{1}{2}\), we have:
+    \[
+    P(\text{Three Tails}) = \left(\frac{1}{2}\right)^3 = \frac{1}{8}.
+    \]
+\end{itemize}
+
+Thus, the probability of getting all three tails is:
+\[
+\boxed{\frac{1}{8}}
+\]
 \textbf{Computational solution: }\\
 
-\section*{Introduction}
-This document explains the computational process of determining the probability distribution of the number of tails when a coin is tossed three times. The implementation involves two components:
+
+\section*{Z-Transform Computational Method for Coin Toss PMF}
+
+\subsection*{1. Z-Transform Expansion}
+The Z-transform for the number of tails in \(n\) coin tosses is given by:
+\begin{align}
+T(z) = \left( p + (1-p)z \right)^n
+\end{align}
+where:
 \begin{itemize}
-    \item A \textbf{C program} to perform the simulation, calculate the probabilities (PMF), and the cumulative distribution function (CDF).
-    \item A \textbf{Python} to use the results from the C program and generate a plot of the probability.
+    \item \(p\) is the probability of tails (\(p = 0.5\) for a fair coin),
+    \item \(1-p\) is the probability of heads (\(1-p = 0.5\) for a fair coin),
+    \item \(n\) is the number of tosses (\(n = 3\)).
 \end{itemize}
 
-\section*{Definitions}
-Let the random variable \( X \) represent the number of tails when a fair coin is tossed three times. The possible values of \( X \) are:
-\[
-X \in \{0, 1, 2, 3\}.
-\]
+\subsection*{2. Expansion of \(T(z)\)}
+Expand the expression \(\left( p + (1-p)z \right)^n\) using the binomial theorem:
+\begin{align}
+T(z) = \sum_{k=0}^{n} \binom{n}{k} p^{n-k} (1-p)^k z^k
+\end{align}
+where:
 \begin{itemize}
-    \item \textbf{Probability Mass Function (PMF):} The PMF of \( X \) is defined as:
-    \[
-    P(X = x) = \frac{\text{Number of occurrences of } x}{\text{Total number of trials}},
-    \]
-    where \( x \in \{0, 1, 2, 3\} \).
-    \item \textbf{Cumulative Distribution Function (CDF):} The CDF of \( X \) is defined as:
-    \[
-    F(X = x) = \sum_{k=0}^{x} P(X = k),
-    \]
-    which gives the cumulative probability of obtaining \( k \) or fewer tails.
+    \item \(\binom{n}{k}\) is the binomial coefficient, computed as:
+    \begin{align}
+    \binom{n}{k} = \frac{n!}{k! (n-k)!}
+    \end{align}
+    \item The coefficient of \(z^k\) in \(T(z)\) gives the probability \(P(X = k)\), where \(X\) is the number of tails.
 \end{itemize}
 
-\section*{C Program Implementation}
-The C program performs the following steps:
+\subsection*{3. Probability Mass Function (PMF)}
+The PMF is computed as:
+\begin{align}
+P(X = k) = \binom{n}{k} p^{n-k} (1-p)^k
+\end{align}
+Substitute \(p = 0.5\) and \(1-p = 0.5\) for a fair coin:
+\begin{align}
+P(X = k) = \binom{n}{k} (0.5)^n
+\end{align}
+
+\subsection*{4. Computational Steps}
+For each \(k \in \{0, 1, \dots, n\}\):
 \begin{enumerate}
-    \item Simulate \( n \) trials of tossing a coin three times using the \texttt{rand()} function to generate random outcomes (head or tail).
-    \item Count the number of occurrences of 0, 1, 2, and 3 tails across all trials.
-    \item Compute the PMF:
-    \[
-    P(X = x) = \frac{\text{Number of occurrences of } x}{n}, \quad \text{for } x \in \{0, 1, 2, 3\}.
-    \]
-    \item Compute the CDF using the PMF:
-    \[
-    F(X = x) = \sum_{k=0}^{x} P(X = k).
-    \]
-    \item Expose the results (PMF and CDF) as arrays for use in Python.
+    \item Compute the binomial coefficient:
+    \begin{align}
+    \binom{n}{k} = \prod_{i=0}^{k-1} \frac{n-i}{k-i}
+    \end{align}
+    \item Multiply by \((0.5)^n\) to compute \(P(X = k)\):
+    \begin{align}
+    P(X = k) = \binom{n}{k} \cdot (0.5)^n
+    \end{align}
 \end{enumerate}
 
-\section*{Python Script Implementation}
-The Python script:
-\begin{enumerate}
-    \item Loads the shared object file (\texttt{.so}) created by the C program.
-    \item Calls the \texttt{calculate\_probabilities} function in the C program, passing the number of trials (\( n \)) and retrieving the PMF and CDF as arrays.
-    \item Plots the PMF as a stem plot, showing the probabilities for each outcome (0, 1, 2, and 3 tails).
-\end{enumerate}
+\subsection*{5. Result for \(n = 3\)}
+Substituting \(n = 3\) and expanding:
+\begin{align}
+T(z) = (0.5 + 0.5z)^3 = 0.125 + 0.375z + 0.375z^2 + 0.125z^3
+\end{align}
+The PMF values are:
+\begin{align}
+P(X = 0) = 0.125, \quad P(X = 1) = 0.375, \quad P(X = 2) = 0.375, \quad P(X = 3) = 0.125
+\end{align}
 
-\section*{Use of CDF in Computation}
-The CDF is computed in the C program using the PMF:
-\[
-F(X = x) = F(X = x-1) + P(X = x), \quad \text{for } x \geq 1,
-\]
-with the initial condition:
-\[
-F(X = 0) = P(X = 0).
-\]
-The Python script does not directly use the CDF but focuses on visualizing the PMF.
-
-\section*{Visualization}
-The Python script generates a stem plot of the PMF, illustrating the probabilities for each outcome:
-\[
-P(X = 0), P(X = 1), P(X = 2), P(X = 3).
-\]
-
-\section*{Conclusion}
-This computational process combines the efficiency of C for numerical simulation and the versatility of Python for visualization. The CDF plays a key role in ensuring the correctness of cumulative probabilities, which validates the PMF computation.
 
 	\begin{figure}[h!]
 		\centering
 		\includegraphics[width=\columnwidth]{figs/fig1.png}
-		\caption{Solution of the system of linear equations}
 		\label{stemplot}
 	\end{figure}
 	

@@ -1,39 +1,31 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
+#include <math.h>
 
-// Function to calculate probabilities
-void simulate_coin_toss(int n, double *probabilities, double *cdf) {
-    int outcomes[4] = {0}; // Counts for 0, 1, 2, 3 tails
-    int i;
+// Function to calculate PMF using Z-transform
+void calculate_pmf_z_transform(double *pmf) {
+    int n = 3; // Number of tosses
+    double p = 0.5; // Probability of tails for a fair coin
 
-    // Simulate the trials
-    for (i = 0; i < n; i++) {
-        int tail_count = 0;
-        for (int toss = 0; toss < 3; toss++) {
-            if (rand() % 2 == 0) { // Random 0 or 1; 0 represents tail
-                tail_count++;
-            }
+    // Compute coefficients of Z-transform: (p + (1-p)z)^n
+    // Z-transform expansion: (p + qz)^n = \sum_{k=0}^{n} C(n, k) * p^(n-k) * q^k * z^k
+    // PMF corresponds to the coefficients of z^k
+
+    for (int k = 0; k <= n; k++) {
+        // Calculate binomial coefficient C(n, k)
+        double binomial_coefficient = 1;
+        for (int i = 0; i < k; i++) {
+            binomial_coefficient *= (n - i) / (double)(i + 1);
         }
-        outcomes[tail_count]++;
-    }
 
-    // Calculate probabilities
-    for (i = 0; i < 4; i++) {
-        probabilities[i] = (double)outcomes[i] / n;
-    }
-
-    // Calculate CDF
-    cdf[0] = probabilities[0];
-    for (i = 1; i < 4; i++) {
-        cdf[i] = cdf[i - 1] + probabilities[i];
+        // Compute PMF value for k tails using Z-transform
+        pmf[k] = binomial_coefficient * pow(p, n - k) * pow(1 - p, k);
     }
 }
 
 // Expose to Python
 __attribute__((visibility("default"))) __attribute__((used))
-void calculate_probabilities(int n, double *probabilities, double *cdf) {
-    srand(time(NULL));
-    simulate_coin_toss(n, probabilities, cdf);
+void get_probabilities(double *pmf) {
+    calculate_pmf_z_transform(pmf);
 }
 
