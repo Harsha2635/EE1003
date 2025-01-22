@@ -87,8 +87,33 @@ Thus, the probability of getting all three tails is:
 
 
 \section*{Z-Transform Computational Method for Coin Toss PMF}
+\subsection*{PMF for a Single Coin Toss}
+For a single coin toss, the probability mass function (PMF) is:
+\[
+P_X(x) =
+\begin{cases}
+p, & \text{if } x = 1 \text{ (Tails)} \\
+1-p, & \text{if } x = 0 \text{ (Heads)}
+\end{cases}
+\]
+where \(p = 0.5\) for a fair coin.
 
-\subsection*{1. Z-Transform Expansion}
+\subsection*{Conditions for PMF}
+A valid PMF must satisfy the following conditions:
+\begin{enumerate}
+    \item Non-negativity: \(\forall x, P(X = x) \geq 0\).
+    \item Normalization: \(\sum_{x} P(X = x) = 1\).
+\end{enumerate}
+For a single coin toss:
+\begin{align}
+P_X(0) + P_X(1) = 1.
+\end{align}
+Substituting \(p = 0.5\):
+\begin{align}
+P_X(0) = 0.5, \quad P_X(1) = 0.5.
+\end{align}
+
+\subsection*{Z-Transform Expansion}
 The Z-transform for the number of tails in \(n\) coin tosses is given by:
 \begin{align}
 T(z) = \left( p + (1-p)z \right)^n
@@ -100,7 +125,7 @@ where:
     \item \(n\) is the number of tosses (\(n = 3\)).
 \end{itemize}
 
-\subsection*{2. Expansion of \(T(z)\)}
+\subsection*{Expansion of \(T(z)\)}
 Expand the expression \(\left( p + (1-p)z \right)^n\) using the binomial theorem:
 \begin{align}
 T(z) = \sum_{k=0}^{n} \binom{n}{k} p^{n-k} (1-p)^k z^k
@@ -114,7 +139,7 @@ where:
     \item The coefficient of \(z^k\) in \(T(z)\) gives the probability \(P_X(k)\), where \(X\) is the number of tails.
 \end{itemize}
 
-\subsection*{3. Probability Mass Function (PMF)}
+\subsection*{Probability Mass Function (PMF)}
 The PMF is computed as:
 \begin{align}
 P_X(k) = \binom{n}{k} p^{n-k} (1-p)^k
@@ -124,7 +149,7 @@ Substitute \(p = 0.5\) and \(1-p = 0.5\) for a fair coin:
 P_X(k) = \binom{n}{k} (0.5)^n
 \end{align}
 
-\subsection*{4. Computational Steps}
+\subsection*{Computational Steps}
 For each \(k \in \{0, 1, \dots, n\}\):
 \begin{enumerate}
     \item Compute the binomial coefficient:
@@ -137,7 +162,7 @@ For each \(k \in \{0, 1, \dots, n\}\):
     \end{align}
 \end{enumerate}
 
-\subsection*{5. Result for \(n = 3\)}
+\subsection*{Result for \(n = 3\)}
 Substituting \(n = 3\) and expanding:
 \begin{align}
 T(z) = (0.5 + 0.5z)^3 = 0.125 + 0.375z + 0.375z^2 + 0.125z^3
@@ -146,10 +171,16 @@ The PMF values are:
 \begin{align}
 P_X(0) = 0.125, \quad P_X(1) = 0.375, \quad P_X(2) = 0.375, \quad P_X(3) = 0.125
 \end{align}
+The CDF must satisfy:
+\begin{enumerate}
+    \item \(F_X(k)\) is non-decreasing.
+    \item \(F_X(k) \in [0, 1]\) for all \(k\).
+    \item \(F_X(n) = 1\), where \(n\) is the maximum number of tails.
+\end{enumerate}
 
-The CDF values are:
+For \(n = 3\), the CDF values are:
 \begin{align}
-F_X(0) = 0.125, \quad F_X(1) = 0.5, \quad F_X(2) = 0.875, \quad F_X(3) = 1
+F_X(0) = 0.125, \quad F_X(1) = 0.5, \quad F_X(2) = 0.875, \quad F_X(3) = 1.
 \end{align}
 	\begin{figure}[h!]
 		\centering
